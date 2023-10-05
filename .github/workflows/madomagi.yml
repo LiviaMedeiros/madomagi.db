@@ -1,0 +1,22 @@
+name: madomagi
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '27 */6 * * *'
+permissions:
+  contents: write
+jobs:
+  madomagi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+      - run: bun run main.mjs
+        env:
+          MADOMAGI_ORIGIN: ${{ secrets.MADOMAGI_ORIGIN }}
+          MADOMAGI_PATH: ${{ secrets.MADOMAGI_PATH }}
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: upd
+          commit_user_name: LiviaMedeiros
+          commit_user_email: livia@cirno.name
