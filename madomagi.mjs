@@ -15,6 +15,7 @@ export default class Madomagi extends Map {
     $.exec('pragma journal_mode = WAL;');
     $.query('create table if not exists asset_json(file char(128) primary key, etag char(128));').run();
     $.query('create table if not exists download_asset(path char(128) primary key, md5 char(128));').run();
+    $.query('create table if not exists delete_asset(path char(128) primary key);').run();
     super($.query('select path, md5 from download_asset;').values());
     this.#db = $;
     this.#getEtag = $.query('select etag from asset_json where file = $file;');
